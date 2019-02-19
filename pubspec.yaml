@@ -1,0 +1,18 @@
+name: proxy_layout
+description: Package to select layout per orientation or device size like mobile vs tablet layouts or portrait vs landscape, they can be combine to support full layout customization.
+version: 1.0.0
+author: jaumard <jimmy.aumard@gmail.com>
+homepage: https://github.com/jaumard/proxy_layout
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
