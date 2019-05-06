@@ -12,18 +12,26 @@ You have two widgets at your disposal, `DeviceProxy` to use different widget for
 
 ```dart
 DeviceProxy(
-        mobile: Text('Mobile widget'),
-        tablet: Text('Tablet widget'),
+        mobile: (context) => Text('Mobile widget'),
+        tablet: (context) => Text('Tablet widget'),
       ),
 ```
 
 The threshold to separate Mobile and Tablet devices is 600, you can override it by setting the `threshold` attribute.
 
+If you don't want to specify mobile and tablet you can use `builder` attribute that will let you know if you are on tablet or mobile with `DeviceProxyType` enum.
+
+The is `isMobile` and `isTablet` static methods available if you need to know at some point the device type to tweak some attributes. 
+
 ### OrientationProxy
 
 ```dart
 OrientationProxy(
-          landscape: Text('Landscape widget'),
-          portrait: Text('Portrait widget'),
+          landscape: (context) => Text('Landscape widget'),
+          portrait: (context) => Text('Portrait widget'),
         ),
 ```
+
+If you don't want to specify portrait and landscape you can use `builder` attribute that will let you know which orientation you are with `DeviceOrientationType` enum.
+
+The is `isPortrait` and `isLandscape` static methods available if you need to know at some point the orientation to just tweak some attributes.

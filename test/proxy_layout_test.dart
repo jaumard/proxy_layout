@@ -15,11 +15,11 @@ void main() {
   }
 
   testWidgets('OrientationProxy portrait proxy', (WidgetTester tester) async {
-    final portrait = Directionality(textDirection: TextDirection.ltr, child: Text('portrait'));
-    final landscape = Directionality(textDirection: TextDirection.ltr, child: Text('landscape'));
+    final portrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('portrait'));
+    final landscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('landscape'));
     final orientation = makeTestableWidget(
       size: Size(375, 812),
-      child: OrientationProxy(portrait: portrait, landscape: landscape),
+      child: OrientationProxy(portraitBuilder: portrait, landscapeBuilder: landscape),
     );
 
     await tester.pumpWidget(orientation);
@@ -29,11 +29,11 @@ void main() {
   });
 
   testWidgets('OrientationProxy landscape proxy', (WidgetTester tester) async {
-    final portrait = Directionality(textDirection: TextDirection.ltr, child: Text('portrait'));
-    final landscape = Directionality(textDirection: TextDirection.ltr, child: Text('landscape'));
+    final portrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('portrait'));
+    final landscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('landscape'));
     final orientation = makeTestableWidget(
       size: Size(1024, 768),
-      child: OrientationProxy(portrait: portrait, landscape: landscape),
+      child: OrientationProxy(portraitBuilder: portrait, landscapeBuilder: landscape),
     );
 
     await tester.pumpWidget(orientation);
@@ -43,11 +43,11 @@ void main() {
   });
 
   testWidgets('DeviceProxy mobile proxy', (WidgetTester tester) async {
-    final mobile = Directionality(textDirection: TextDirection.ltr, child: Text('mobile'));
-    final tablet = Directionality(textDirection: TextDirection.ltr, child: Text('tablet'));
+    final mobile = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile'));
+    final tablet = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet'));
     final orientation = makeTestableWidget(
       size: Size(375, 812),
-      child: DeviceProxy(tablet: tablet, mobile: mobile),
+      child: DeviceProxy(tabletBuilder: tablet, mobileBuilder: mobile),
     );
 
     await tester.pumpWidget(orientation);
@@ -57,11 +57,11 @@ void main() {
   });
 
   testWidgets('DeviceProxy tablet proxy', (WidgetTester tester) async {
-    final mobile = Directionality(textDirection: TextDirection.ltr, child: Text('mobile'));
-    final tablet = Directionality(textDirection: TextDirection.ltr, child: Text('tablet'));
+    final mobile = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile'));
+    final tablet = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet'));
     final orientation = makeTestableWidget(
       size: Size(1024, 768),
-      child: DeviceProxy(tablet: tablet, mobile: mobile),
+      child: DeviceProxy(tabletBuilder: tablet, mobileBuilder: mobile),
     );
 
     await tester.pumpWidget(orientation);

@@ -25,13 +25,13 @@ class MyHomePage extends StatelessWidget {
         title: Text('Proxy Layout Home Page'),
       ),
       body: DeviceProxy(
-        mobile: OrientationProxy(
-          landscape: MyMobileLandscapeContent(),
-          portrait: MyMobilePortraitContent(),
+        mobileBuilder: (_) => OrientationProxy(
+          landscapeBuilder: (_) => MyMobileLandscapeContent(),
+          portraitBuilder: (_) => MyMobilePortraitContent(),
         ),
-        tablet: OrientationProxy(
-          landscape: MyTabletLandscapeContent(),
-          portrait: MyTabletPortraitContent(),
+        tabletBuilder: (_) => OrientationProxy(
+          landscapeBuilder: (_) => MyTabletLandscapeContent(),
+          portraitBuilder: (_) => MyTabletPortraitContent(),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
