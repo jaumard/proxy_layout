@@ -56,7 +56,7 @@ class DeviceProxy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OrientationBuilder(builder: (context, orientation) {
-      final type = getType(context);
+      final type = getType(context, orientation);
 
       if (builder != null) {
         return builder(context, type);
@@ -70,9 +70,9 @@ class DeviceProxy extends StatelessWidget {
     });
   }
 
-  DeviceProxyType getType(BuildContext context) {
+  DeviceProxyType getType(BuildContext context, Orientation orientation) {
     Size size = MediaQuery.of(context).size;
-    double width = size.width > size.height ? size.height : size.width;
+    double width = orientation == Orientation.landscape ? size.width : size.height;
     return width > threshold ? DeviceProxyType.tablet : DeviceProxyType.mobile;
   }
 

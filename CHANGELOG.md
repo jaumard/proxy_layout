@@ -1,3 +1,7 @@
+## [2.0.1] - 18/09/2019.
+
+* fix tablet detection to be based on orientation
+
 ## [2.0.0] - 06/06/2019.
 
 * change interfaces to use builders.

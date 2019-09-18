@@ -1,6 +1,6 @@
 name: proxy_layout
 description: Package to select layout per orientation or device size like mobile vs tablet layouts or portrait vs landscape, they can be combine to support full layout customization.
-version: 2.0.0
+version: 2.0.1
 author: jaumard <jimmy.aumard@gmail.com>
 homepage: https://github.com/jaumard/proxy_layout
 
