@@ -71,20 +71,17 @@ class DeviceProxy extends StatelessWidget {
   }
 
   DeviceProxyType getType(BuildContext context, Orientation orientation) {
-    Size size = MediaQuery.of(context).size;
-    double width = orientation == Orientation.landscape ? size.width : size.height;
-    return width > threshold ? DeviceProxyType.tablet : DeviceProxyType.mobile;
+    final size = MediaQuery.of(context).size.shortestSide;
+    return size > threshold ? DeviceProxyType.tablet : DeviceProxyType.mobile;
   }
 
   static bool isMobile(BuildContext context, {int threshold = 600}) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width > size.height ? size.height : size.width;
-    return width <= threshold;
+    final size = MediaQuery.of(context).size.shortestSide;
+    return size <= threshold;
   }
 
   static bool isTablet(BuildContext context, {int threshold = 600}) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width > size.height ? size.height : size.width;
-    return width > threshold;
+    final size = MediaQuery.of(context).size.shortestSide;
+    return size > threshold;
   }
 }

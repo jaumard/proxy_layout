@@ -1,3 +1,7 @@
+## [2.0.2] - 29/09/2019.
+
+* use shortestSide to more accurate tablet detection
+
 ## [2.0.1] - 18/09/2019.
 
 * fix tablet detection to be based on orientation
