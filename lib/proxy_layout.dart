@@ -2,6 +2,8 @@ library proxy_layout;
 
 import 'package:flutter/material.dart';
 
+const _defaultThreshold = 600;
+
 enum DeviceProxyType { mobile, tablet }
 
 enum DeviceOrientationType { portrait, landscape }
@@ -51,7 +53,7 @@ class DeviceProxy extends StatelessWidget {
   final Widget Function(BuildContext context, DeviceProxyType type) builder;
   final int threshold;
 
-  const DeviceProxy({Key key, this.tabletBuilder, this.mobileBuilder, this.threshold = 600, this.builder}) : super(key: key);
+  const DeviceProxy({Key key, this.tabletBuilder, this.mobileBuilder, this.threshold = _defaultThreshold, this.builder}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +77,45 @@ class DeviceProxy extends StatelessWidget {
     return size > threshold ? DeviceProxyType.tablet : DeviceProxyType.mobile;
   }
 
-  static bool isMobile(BuildContext context, {int threshold = 600}) {
+  static bool isMobile(BuildContext context, {int threshold = _defaultThreshold}) {
     final size = MediaQuery.of(context).size.shortestSide;
     return size <= threshold;
   }
 
-  static bool isTablet(BuildContext context, {int threshold = 600}) {
+  static bool isTablet(BuildContext context, {int threshold = _defaultThreshold}) {
     final size = MediaQuery.of(context).size.shortestSide;
     return size > threshold;
+  }
+}
+
+class LayoutProxy extends StatelessWidget {
+  final WidgetBuilder tabletPortraitBuilder;
+  final WidgetBuilder tabletLandscapeBuilder;
+  final WidgetBuilder mobilePortraitBuilder;
+  final WidgetBuilder mobileLandscapeBuilder;
+  final int threshold;
+
+  const LayoutProxy({
+    Key key,
+    this.tabletPortraitBuilder,
+    this.tabletLandscapeBuilder,
+    this.mobilePortraitBuilder,
+    this.mobileLandscapeBuilder,
+    this.threshold = _defaultThreshold,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DeviceProxy(
+      threshold: threshold,
+      mobileBuilder: (context) => OrientationProxy(
+        portraitBuilder: mobilePortraitBuilder,
+        landscapeBuilder: mobileLandscapeBuilder,
+      ),
+      tabletBuilder: (context) => OrientationProxy(
+        portraitBuilder: tabletPortraitBuilder,
+        landscapeBuilder: tabletLandscapeBuilder,
+      ),
+    );
   }
 }
