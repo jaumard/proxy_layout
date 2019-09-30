@@ -1,3 +1,7 @@
+## [2.1.0] - 30/09/2019.
+
+* add LayoutProxy widget
+
 ## [2.0.2] - 29/09/2019.
 
 * use shortestSide to more accurate tablet detection

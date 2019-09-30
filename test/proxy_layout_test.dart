@@ -69,4 +69,76 @@ void main() {
     expect(find.text('mobile'), findsNothing);
     expect(find.text('tablet'), findsOneWidget);
   });
+
+  testWidgets('LayoutProxy tablet proxy', (WidgetTester tester) async {
+    final mobilePortrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile portrait'));
+    final tabletPortrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet portrait'));
+    final mobileLandscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile landscape'));
+    final tabletLandscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet landscape'));
+    final orientation = makeTestableWidget(
+      size: Size(1024, 768),
+      child: LayoutProxy(
+        tabletPortraitBuilder: tabletPortrait,
+        mobilePortraitBuilder: mobilePortrait,
+        tabletLandscapeBuilder: tabletLandscape,
+        mobileLandscapeBuilder: mobileLandscape,
+      ),
+    );
+
+    await tester.pumpWidget(orientation);
+
+    expect(find.text('tablet landscape'), findsOneWidget);
+    expect(find.text('tablet portrait'), findsNothing);
+
+    final orientation2 = makeTestableWidget(
+      size: Size(768, 1024),
+      child: LayoutProxy(
+        tabletPortraitBuilder: tabletPortrait,
+        mobilePortraitBuilder: mobilePortrait,
+        tabletLandscapeBuilder: tabletLandscape,
+        mobileLandscapeBuilder: mobileLandscape,
+      ),
+    );
+
+    await tester.pumpWidget(orientation2);
+
+    expect(find.text('tablet landscape'), findsNothing);
+    expect(find.text('tablet portrait'), findsOneWidget);
+  });
+
+  testWidgets('LayoutProxy mobile proxy', (WidgetTester tester) async {
+    final mobilePortrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile portrait'));
+    final tabletPortrait = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet portrait'));
+    final mobileLandscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('mobile landscape'));
+    final tabletLandscape = (context) => Directionality(textDirection: TextDirection.ltr, child: Text('tablet landscape'));
+    final orientation = makeTestableWidget(
+      size: Size(812, 375),
+      child: LayoutProxy(
+        tabletPortraitBuilder: tabletPortrait,
+        mobilePortraitBuilder: mobilePortrait,
+        tabletLandscapeBuilder: tabletLandscape,
+        mobileLandscapeBuilder: mobileLandscape,
+      ),
+    );
+
+    await tester.pumpWidget(orientation);
+
+    expect(find.text('mobile landscape'), findsOneWidget);
+    expect(find.text('mobile portrait'), findsNothing);
+
+    final orientation2 = makeTestableWidget(
+      size: Size(375, 812),
+      child: LayoutProxy(
+        tabletPortraitBuilder: tabletPortrait,
+        mobilePortraitBuilder: mobilePortrait,
+        tabletLandscapeBuilder: tabletLandscape,
+        mobileLandscapeBuilder: mobileLandscape,
+      ),
+    );
+
+    await tester.pumpWidget(orientation2);
+
+    expect(find.text('mobile landscape'), findsNothing);
+    expect(find.text('mobile portrait'), findsOneWidget);
+  });
 }

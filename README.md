@@ -12,8 +12,8 @@ You have two widgets at your disposal, `DeviceProxy` to use different widget for
 
 ```dart
 DeviceProxy(
-        mobile: (context) => Text('Mobile widget'),
-        tablet: (context) => Text('Tablet widget'),
+        mobileBuilder: (context) => Text('Mobile widget'),
+        tabletBuilder: (context) => Text('Tablet widget'),
       ),
 ```
 
@@ -27,11 +27,25 @@ The is `isMobile` and `isTablet` static methods available if you need to know at
 
 ```dart
 OrientationProxy(
-          landscape: (context) => Text('Landscape widget'),
-          portrait: (context) => Text('Portrait widget'),
+          landscapeBuilder: (context) => Text('Landscape widget'),
+          portraitBuilder: (context) => Text('Portrait widget'),
         ),
 ```
 
 If you don't want to specify portrait and landscape you can use `builder` attribute that will let you know which orientation you are with `DeviceOrientationType` enum.
 
 The is `isPortrait` and `isLandscape` static methods available if you need to know at some point the orientation to just tweak some attributes.
+
+### LayoutProxy
+LayoutProxy help you manage device and orientation at once, check this out:
+
+```dart
+LayoutProxy(
+          tabletPortraitBuilder: (context) => Text('Tablet portrait widget'),
+          tabletLandscapeBuilder: (context) => Text('Tablet landscape widget'),
+          mobilePortraitBuilder: (context) => Text('Mobile portrait widget'),
+          mobileLandscapeBuilder: (context) => Text('Mobile landscape widget'),
+        ),
+```
+
+The threshold to separate Mobile and Tablet devices is 600, you can override it by setting the `threshold` attribute.
