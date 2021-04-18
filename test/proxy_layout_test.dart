@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:proxy_layout/proxy_layout.dart';
 
 void main() {
-  Widget makeTestableWidget({Widget child, Size size}) {
+  Widget makeTestableWidget({required Widget child, required Size size}) {
     return MaterialApp(
       home: MediaQuery(
         data: MediaQueryData(size: size),

@@ -1,3 +1,7 @@
+## [3.0.0] - 18/04/2021.
+
+* migrate to null safety
+
 ## [2.1.0] - 30/09/2019.
 
 * add LayoutProxy widget

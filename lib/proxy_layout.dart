@@ -10,29 +10,48 @@ enum DeviceOrientationType { portrait, landscape }
 
 /// A Widget to select the widget to use depending on device's orientation.
 class OrientationProxy extends StatelessWidget {
-  final WidgetBuilder landscapeBuilder;
-  final WidgetBuilder portraitBuilder;
-  final Widget Function(BuildContext, DeviceOrientationType) builder;
+  final WidgetBuilder? landscapeBuilder;
+  final WidgetBuilder? portraitBuilder;
+  final Widget Function(BuildContext, DeviceOrientationType)? builder;
 
-  const OrientationProxy({Key key, this.landscapeBuilder, this.portraitBuilder, this.builder}) : super(key: key);
+  const OrientationProxy({
+    Key? key,
+    required WidgetBuilder landscapeBuilder,
+    required WidgetBuilder portraitBuilder,
+  })   : builder = null,
+        landscapeBuilder = landscapeBuilder,
+        portraitBuilder = portraitBuilder,
+        super(key: key);
+
+  const OrientationProxy.generic(
+      {Key? key,
+      required Widget Function(BuildContext, DeviceOrientationType) builder})
+      : landscapeBuilder = null,
+        portraitBuilder = null,
+        builder = builder,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
 
     if (builder != null) {
-      return builder(context, orientation == Orientation.landscape ? DeviceOrientationType.landscape : DeviceOrientationType.portrait);
+      return builder!(
+          context,
+          orientation == Orientation.landscape
+              ? DeviceOrientationType.landscape
+              : DeviceOrientationType.portrait);
     }
 
     switch (orientation) {
       case Orientation.landscape:
-        return landscapeBuilder(context);
+        return landscapeBuilder!(context);
       case Orientation.portrait:
-        return portraitBuilder(context);
+        return portraitBuilder!(context);
       default:
         print('Unknown orientation used $orientation, fallback to portrait');
     }
-    return portraitBuilder(context);
+    return portraitBuilder!(context);
   }
 
   static bool isPortrait(BuildContext context) {
@@ -48,12 +67,30 @@ class OrientationProxy extends StatelessWidget {
 
 /// A Widget to select the widget to use depending on device's width.
 class DeviceProxy extends StatelessWidget {
-  final WidgetBuilder tabletBuilder;
-  final WidgetBuilder mobileBuilder;
-  final Widget Function(BuildContext context, DeviceProxyType type) builder;
+  final WidgetBuilder? tabletBuilder;
+  final WidgetBuilder? mobileBuilder;
+  final Widget Function(BuildContext context, DeviceProxyType type)? builder;
   final int threshold;
 
-  const DeviceProxy({Key key, this.tabletBuilder, this.mobileBuilder, this.threshold = _defaultThreshold, this.builder}) : super(key: key);
+  const DeviceProxy({
+    Key? key,
+    required WidgetBuilder tabletBuilder,
+    required WidgetBuilder mobileBuilder,
+    this.threshold = _defaultThreshold,
+  })  : tabletBuilder = tabletBuilder,
+        mobileBuilder = mobileBuilder,
+        builder = null,
+        super(key: key);
+
+  const DeviceProxy.generic(
+      {Key? key,
+      this.threshold = _defaultThreshold,
+      required Widget Function(BuildContext context, DeviceProxyType type)
+          builder})
+      : builder = builder,
+        tabletBuilder = null,
+        mobileBuilder = null,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +98,13 @@ class DeviceProxy extends StatelessWidget {
       final type = getType(context, orientation);
 
       if (builder != null) {
-        return builder(context, type);
+        return builder!(context, type);
       }
 
       if (type == DeviceProxyType.tablet) {
-        return tabletBuilder(context);
+        return tabletBuilder!(context);
       } else {
-        return mobileBuilder(context);
+        return mobileBuilder!(context);
       }
     });
   }
@@ -77,12 +114,14 @@ class DeviceProxy extends StatelessWidget {
     return size > threshold ? DeviceProxyType.tablet : DeviceProxyType.mobile;
   }
 
-  static bool isMobile(BuildContext context, {int threshold = _defaultThreshold}) {
+  static bool isMobile(BuildContext context,
+      {int threshold = _defaultThreshold}) {
     final size = MediaQuery.of(context).size.shortestSide;
     return size <= threshold;
   }
 
-  static bool isTablet(BuildContext context, {int threshold = _defaultThreshold}) {
+  static bool isTablet(BuildContext context,
+      {int threshold = _defaultThreshold}) {
     final size = MediaQuery.of(context).size.shortestSide;
     return size > threshold;
   }
@@ -96,11 +135,11 @@ class LayoutProxy extends StatelessWidget {
   final int threshold;
 
   const LayoutProxy({
-    Key key,
-    this.tabletPortraitBuilder,
-    this.tabletLandscapeBuilder,
-    this.mobilePortraitBuilder,
-    this.mobileLandscapeBuilder,
+    Key? key,
+    required this.tabletPortraitBuilder,
+    required this.tabletLandscapeBuilder,
+    required this.mobilePortraitBuilder,
+    required this.mobileLandscapeBuilder,
     this.threshold = _defaultThreshold,
   }) : super(key: key);
 
